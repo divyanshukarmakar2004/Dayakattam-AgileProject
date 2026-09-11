@@ -58,6 +58,8 @@
       this.el('screen-end').classList.add('hidden');
     }
 
+    
+
     private endTurnCheck(extra: boolean) {
       const state = this.state!;
       if (state.over) { this.showEnd(); return; }
@@ -82,6 +84,8 @@
         setTimeout(() => this.aiTurn(), 700);
       }
     }
+
+    
 
     doRoll(forcedRoll?: RollResult) {
       const state = this.state!;
@@ -328,11 +332,20 @@
     }
 
     private saveGameStats() {
+
+      const keyboardHint = document.createElement('div');
+
+keyboardHint.className = 'keyboard-hint';
+
+keyboardHint.innerHTML = `
+  <span><kbd>Enter</kbd> Roll</span>
+  <span><kbd>R</kbd> Restart</span>
+  <span><kbd>Esc</kbd> Close menu</span>
+  <span><kbd>Ctrl + D</kbd> Debug</span>
+`;
+
+this.el('hud').appendChild(keyboardHint);
   if (!this.state) return;
-npm run build
-git add .
-git commit -m "feat: add keyboard accessibility controls"
-git push origin main
   const history = JSON.parse(
     localStorage.getItem('dayakattam-history') || '[]'
   );
