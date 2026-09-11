@@ -74,7 +74,7 @@
       this.el('pieceChoices').innerHTML = '';
       this.scene.setSelectable([]);
       if (state.turn === 'player') {
-        this.el('diceResult').innerHTML = 'Your turn — roll the Dayam';
+        this.setGameMessage('Your turn — press Enter or roll the Dayam', 'player');
         (this.el('rollBtn') as HTMLButtonElement).disabled = false;
       } else {
         this.el('diceResult').innerHTML = "AI's turn";
@@ -336,6 +336,8 @@ git push origin main
   const history = JSON.parse(
     localStorage.getItem('dayakattam-history') || '[]'
   );
+
+  this.el('diceResult').innerHTML = 'Your turn — roll the Dayam';
 
   history.push({
     winner: this.state.winner,
