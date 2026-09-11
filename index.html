@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Dayakattam — The Forgotten Game of Tamil Nadu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app"></div>
+<!-- ================= MENU SCREEN ================= -->
+<div id="screen-menu" class="screen">
+  <h1 class="title-main">DAYAKATTAM</h1>
+  <div class="title-sub">The Forgotten Game of Tamil Nadu</div>
+  <div class="vs-line"><b>YOU</b> &nbsp;vs&nbsp; <i>THE AI</i></div>
+
+  <div class="diff-row" id="diffRow"></div>
+
+  <button class="btn" id="playBtn">Play</button>
+  <div class="menu-links">
+    <button class="btn secondary" id="rulesBtnMenu">How to Play</button>
+    <button class="btn secondary" id="aboutBtnMenu">About Dayakattam</button>
+    <button class="btn secondary" id="fairBtnMenu">Fair Play</button>
+  </div>
+</div>
+
+<!-- ================= WIN/LOSE SCREEN ================= -->
+<div id="screen-end" class="screen hidden">
+  <h1 class="title-main" id="endTitle">GAME COMPLETE</h1>
+  <div class="title-sub" id="endSub">Winner</div>
+
+  <div class="modal" style="margin-top:10px;">
+    <div class="stats-grid">
+      <div class="stats-col player">
+        <h4>Your Stats</h4>
+        <div class="row"><span>Pieces home</span><b id="stPHome">0</b></div>
+        <div class="row"><span>Captures made</span><b id="stPCaps">0</b></div>
+        <div class="row"><span>Turns taken</span><b id="stPTurns">0</b></div>
+        <div class="row"><span>Special throws</span><b id="stPSpecial">0</b></div>
+        <div class="row"><span>Distance travelled</span><b id="stPDist">0</b></div>
+        <div class="row"><span>Longest safe streak</span><b id="stPSafe">0</b></div>
+      </div>
+      <div class="stats-col ai">
+        <h4>AI Stats</h4>
+        <div class="row"><span>Pieces home</span><b id="stAHome">0</b></div>
+        <div class="row"><span>Captures made</span><b id="stACaps">0</b></div>
+        <div class="row"><span>Turns taken</span><b id="stATurns">0</b></div>
+      </div>
+    </div>
+    <div class="row" style="text-align:center;color:var(--parchment-dim);font-size:13px;">Game duration: <b id="stDuration" style="color:var(--brass)">0:00</b></div>
+  </div>
+  <button class="btn" id="playAgainBtn" style="margin-top:20px;">Play Again</button>
+</div>
+
+<!-- ================= HUD ================= -->
+<div id="hud" class="hidden">
+  <div id="topbar">
+    <div class="panel status-card player">
+      <h3>Your Pieces</h3>
+      <div class="row"><span>Home</span><b id="pHome">0</b></div>
+      <div class="row"><span>On board</span><b id="pBoard">0</b></div>
+    </div>
+    <div class="panel status-card ai">
+      <h3>AI Pieces</h3>
+      <div class="row"><span>Home</span><b id="aHome">0</b></div>
+      <div class="row"><span>On board</span><b id="aBoard">0</b></div>
+    </div>
+  </div>
+
+  <div class="panel" id="turnbar">
+    <div class="label">Turn</div>
+    <div class="value" id="turnValue">Your Turn</div>
+  </div>
+  <div id="aiThinking"><div class="spin"></div>AI is thinking…</div>
+
+  <div id="msgToast"></div>
+
+  <div class="panel" id="dicebar">
+    <div id="diceResult">Roll the Dayam to begin</div>
+    <div id="pieceChoices"></div>
+    <button class="btn" id="rollBtn">Roll Dayam</button>
+  </div>
+
+  <div id="controlsBar">
+    <button class="icon-btn" id="muteBtn" title="Mute">🔊</button>
+    <button class="icon-btn" id="rulesBtn" title="Rules">?</button>
+    <button class="icon-btn" id="resetCamBtn" title="Reset camera">⟲</button>
+    <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
+  </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+<div id="modal-rules" class="modal-overlay hidden">
+  <div class="modal-wrap">
+    <div class="modal">
+      <h2>How to Play</h2>
+      <div class="sub">A playable Tamil Nadu rule set</div>
+
+      <div class="rule-step"><div class="rule-num">1</div><div><h4>Objective</h4><p>Move all four of your pieces from your home base, around the shared track, up your private home path, and into the centre before the AI does.</p></div></div>
+      <div class="rule-step"><div class="rule-num">2</div><div><h4>The Board</h4><p>A cross-shaped track shared by both sides, with a private final stretch for each player leading to the centre.</p></div></div>
+      <div class="rule-step"><div class="rule-num">3</div><div><h4>The Dayam</h4><p>Two brass Dayam pieces are thrown together. Each lands showing either its marked or plain face. The combination decides your move.</p></div></div>
+      <div class="rule-step"><div class="rule-num">4</div><div><h4>Starting a Piece</h4><p>A piece leaves your home base only on a special throw (4 or 6). It enters directly onto your start cell.</p></div></div>
+      <div class="rule-step"><div class="rule-num">5</div><div><h4>Movement</h4><p>Move any piece already on the board forward by the exact number shown. You must be able to land exactly — overshooting the final cell is not allowed.</p></div></div>
+      <div class="rule-step"><div class="rule-num">6</div><div><h4>Capturing</h4><p>Land exactly on an opponent's piece on an unprotected cell to send it back to their home base.</p></div></div>
+      <div class="rule-step"><div class="rule-num">7</div><div><h4>Safe Cells</h4><p>Cells marked with a small engraved diamond are protected — no capturing takes place there.</p></div></div>
+      <div class="rule-step"><div class="rule-num">8</div><div><h4>Home Path</h4><p>After a full circuit of the shared track, a piece turns into your own coloured path, private to you, leading to the centre.</p></div></div>
+      <div class="rule-step"><div class="rule-num">9</div><div><h4>Extra Turns</h4><p>Throwing a 4 or a 6 is a special throw — it earns you another roll immediately, as long as you had a legal move to make.</p></div></div>
+      <div class="rule-step"><div class="rule-num">10</div><div><h4>Winning</h4><p>The first side to bring all four pieces home wins.</p></div></div>
+
+      <div class="note-box">Dayakattam has regional variations across Tamil Nadu. This digital version follows one documented playable rule set, and the rules engine is kept separate from the presentation so regional variants can be added later.</div>
+      <button class="btn secondary" data-close-modal="modal-rules" style="margin-top:6px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-about" class="modal-overlay hidden">
+  <div class="modal-wrap">
+    <div class="modal">
+      <h2>About Dayakattam</h2>
+      <div class="sub">Cultural context</div>
+      <p>Dayakattam — also known in places as Thaayam — belongs to a wider family of traditional South Indian race-and-strategy games, related to Pachisi, Chaupar and Pallanguzhi-adjacent throwing games played across the subcontinent.</p>
+      <p>Rules varied by region, family and community, passed on by demonstration rather than by a fixed rulebook. Equipment traditionally included brass or wooden throwing sticks, and cowrie shells, depending on local tradition. This project does not claim a single precise origin date — the exact age and lineage of these games is not something we can state reliably here.</p>
+      <p>This digital version implements one defined, playable ruleset, built so that other regional variants can be layered onto the same engine in future.</p>
+      <div class="note-box" style="margin-top:22px;">
+        <b style="color:var(--brass);font-family:'Cormorant Garamond',serif;font-size:16px;">Why it matters</b><br/><br/>
+        Games are often preserved through people, not books. Traditional games can quietly disappear when generations stop teaching them, when play moves indoors and digital, when local practices become less common, and when regional variations are simply forgotten. This project exists to keep one playable form of Dayakattam accessible — not to replace the version your own family may play.
+      </div>
+      <button class="btn secondary" data-close-modal="modal-about" style="margin-top:16px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-fair" class="modal-overlay hidden">
+  <div class="modal-wrap">
+    <div class="modal">
+      <h2>Fair Play</h2>
+      <div class="sub">How the dice really work</div>
+      <p>Every Dayam throw is generated independently using your browser's cryptographic random source before any animation begins. The tumbling animation you see is then resolved to match that already-decided result — the animation never determines the outcome, and outcomes are never scripted or predetermined.</p>
+      <p>The AI opponent uses the exact same dice mechanism and the exact same legal-move rules as you. It cannot see future rolls, and it cannot bend the rules in its own favour. Any advantage it has comes purely from stronger decision-making.</p>
+      <button class="btn secondary" data-close-modal="modal-fair" style="margin-top:10px;">Close</button>
+    </div>
+  </div>
+</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
