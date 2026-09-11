@@ -43,6 +43,17 @@
     box-shadow:0 3px 0 #5c451c, 0 8px 18px rgba(0,0,0,.45);
     transition:transform .12s ease, box-shadow .12s ease;
   }
+
+  .keyboard-hint{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.keyboard-hint span{
+  white-space:nowrap;
+}
   .btn:hover{transform:translateY(-2px);box-shadow:0 5px 0 #5c451c,0 12px 22px rgba(0,0,0,.5);}
   .btn:active{transform:translateY(1px);box-shadow:0 2px 0 #5c451c,0 4px 10px rgba(0,0,0,.4);}
   .btn.secondary{background:transparent;color:var(--parchment);border:1px solid var(--brass-dim);
