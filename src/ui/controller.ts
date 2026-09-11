@@ -225,7 +225,12 @@
 
     private buildDifficultyRow() {
       const row = this.el('diffRow');
-      const opts: [Difficulty, string][] = [['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard'], ['expert', 'Expert']];
+      const opts: [Difficulty, string, string][] = [
+  ['easy', 'Easy', 'Best for learning the game'],
+  ['medium', 'Medium', 'A balanced challenge'],
+  ['hard', 'Hard', 'Plans stronger tactical moves'],
+  ['expert', 'Expert', 'Maximum strategic challenge']
+];
       row.innerHTML = '';
       opts.forEach(([key, label]) => {
         const pill = document.createElement('div');
