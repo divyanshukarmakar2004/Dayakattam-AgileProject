@@ -100,7 +100,7 @@
     private onRollResolved(result: RollResult) {
       const state = this.state!;
       this.el('diceResult').innerHTML = `You rolled <b>${result.score}</b>${result.extra ? ' — special!' : ''}`;
-      if (state.turn === 'player') {
+      if (state.turn === 'playe') {
         const moves = legalMoves(state, 'player', result.score);
         if (moves.length === 0) {
           this.toast(
