@@ -8,4 +8,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const ui = new UIController(scene);
   ui.wire();
+  
 });

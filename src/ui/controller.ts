@@ -103,7 +103,10 @@
       if (state.turn === 'player') {
         const moves = legalMoves(state, 'player', result.score);
         if (moves.length === 0) {
-          this.toast('No legal moves — turn passes');
+          this.toast(
+  `No piece can move ${result.score} spaces — your turn passes`,
+  2200
+);
           setTimeout(() => this.endTurnCheck(false), 900);
           return;
         }
