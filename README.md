@@ -162,3 +162,12 @@ This project runs entirely client-side — no backend. It does not include a
 Web Worker for the AI (the search comfortably finishes in well under a
 second even at Expert difficulty, verified in `tests/ai.test.ts`), and
 audio is fully procedural rather than sourced from audio files.
+
+## Keyboard Controls
+
+| Key | Action |
+|---|---|
+| Enter | Roll the Dayam |
+| R | Restart the current game |
+| Esc | Close an open menu |
+| Ctrl + D | Toggle debug information |
