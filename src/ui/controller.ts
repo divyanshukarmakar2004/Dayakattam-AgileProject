@@ -289,4 +289,27 @@
       });
       this.buildDifficultyRow();
     }
+
+    private saveGameStats() {
+  if (!this.state) return;
+
+  const history = JSON.parse(
+    localStorage.getItem('dayakattam-history') || '[]'
+  );
+
+  history.push({
+    winner: this.state.winner,
+    playedAt: new Date().toISOString(),
+    player: this.state.stats.player,
+    ai: this.state.stats.ai,
+    duration: Date.now() - this.state.startTime
+  });
+
+  localStorage.setItem(
+    'dayakattam-history',
+    JSON.stringify(history.slice(-20))
+  );
+}
+
+
   }
