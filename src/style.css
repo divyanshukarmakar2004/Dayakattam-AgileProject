@@ -66,6 +66,24 @@ button:focus-visible,
   outline-offset:3px;
 }
 
+
+/* Game status message animation */
+
+.game-message{
+  animation:statusMessageIn .25s ease;
+}
+
+@keyframes statusMessageIn{
+  from{
+    opacity:0;
+    transform:translateY(6px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
 .diff-pill:focus-visible,
 .piece-choice:focus-visible{
   border-color:var(--brass);

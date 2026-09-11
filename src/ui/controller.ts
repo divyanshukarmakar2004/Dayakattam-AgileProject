@@ -85,6 +85,16 @@
       }
     }
 
+    private setGameMessage(
+  message: string,
+  type: 'normal' | 'player' | 'ai' | 'warning' = 'normal'
+) {
+  const diceResult = this.el<HTMLElement>('diceResult');
+
+  diceResult.className = `game-message ${type}`;
+  diceResult.textContent = message;
+}
+
     
 
     doRoll(forcedRoll?: RollResult) {
