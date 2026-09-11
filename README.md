@@ -171,3 +171,11 @@ audio is fully procedural rather than sourced from audio files.
 | R | Restart the current game |
 | Esc | Close an open menu |
 | Ctrl + D | Toggle debug information |
+
+## Development Workflow
+
+1. Make a focused change.
+2. Test the application locally.
+3. Commit the change with a descriptive message.
+4. Push the change to GitHub.
+5. Tag stable project versions.
