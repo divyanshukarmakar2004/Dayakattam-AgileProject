@@ -277,18 +277,50 @@
         target.textContent = muted ? '🔇' : '🔊';
       };
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'd' && e.ctrlKey) {
-          this.debugOn = !this.debugOn;
-          let panel = document.getElementById('debugPanel');
-          if (!panel) {
-            panel = document.createElement('div');
-            panel.id = 'debugPanel';
-            document.body.appendChild(panel);
-          }
-          panel.style.display = this.debugOn ? 'block' : 'none';
-          if (this.debugOn) this.updateDebug();
-        }
-      });
+
+  // Escape closes open informational modals
+  if (e.key === 'Escape') {
+    this.closeModal('modal-rules');
+    this.closeModal('modal-about');
+    this.closeModal('modal-fair');
+  }
+
+  // Enter rolls the dice when it is the player's turn
+  if (
+    e.key === 'Enter' &&
+    this.state &&
+    this.state.turn === 'player' &&
+    !this.state.over
+  ) {
+    const rollBtn = this.el<HTMLButtonElement>('rollBtn');
+
+    if (!rollBtn.disabled) {
+      e.preventDefault();
+      rollBtn.click();
+    }
+  }
+
+  // R restarts the game
+  if (
+    e.key.toLowerCase() === 'r' &&
+    this.state &&
+    !this.state.over
+  ) {
+    this.restartGame();
+  }
+
+  // Existing debug shortcut
+  if (e.ctrlKey && e.key.toLowerCase() === 'd') {
+    e.preventDefault();
+
+    const debugPanel = document.getElementById('debugPanel');
+
+    if (debugPanel) {
+      debugPanel.classList.toggle('hidden');
+    }
+  }
+
+});
       document.querySelectorAll<HTMLElement>('[data-close-modal]').forEach(btn => {
         btn.onclick = () => this.closeModal(btn.dataset.closeModal!);
       });
@@ -297,7 +329,10 @@
 
     private saveGameStats() {
   if (!this.state) return;
-
+npm run build
+git add .
+git commit -m "feat: add keyboard accessibility controls"
+git push origin main
   const history = JSON.parse(
     localStorage.getItem('dayakattam-history') || '[]'
   );
